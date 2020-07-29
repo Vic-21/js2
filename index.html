@@ -13,7 +13,11 @@
     <div style="height: 300px; width: 300px;">
     <canvas id="myChart" width="400" height="400"></canvas>
     </div>
+    <div style="height: 300px; width: 300px;">
+    <canvas id="myChart2" width="400" height="400"></canvas>
+    </div>
 <script>
+    {
     var moves = 0;
     $.ajax({
         url: "https://pokeapi.co/api/v2/pokemon/jigglypuff",
@@ -61,12 +65,63 @@
             }
         }
       });
-
         }
-        });
+    });
     var a = moment('2000-01-08').locale('es').format('LL'); 
     document.write('Fecha de nacimiento: '+a+'<br>')
     document.write('Pokemón: ')
+    }
+    {
+    var moves = 0;
+    $.ajax({
+        url: " https://pokeapi.co/api/v2/pokemon/absol",
+        
+        success: function( result ) {
+            var ctx = document.getElementById('myChart2').getContext('2d');
+            console.log(result)
+            console.log(result.moves.length)
+            var img = document.createElement('img');
+                img.setAttribute('src',result.sprites.front_default);
+                document.body.appendChild(img);
+            new Chart(ctx, {
+        data: {
+            labels: [result.stats[0].stat.name,result.stats[1].stat.name,result.stats[2].stat.name,result.stats[3].stat.name,result.stats[4].stat.name,result.stats[5].stat.name,] ,
+            datasets: [{
+                label: result.name,
+                data: [result.stats[0].base_stat,result.stats[1].base_stat,result.stats[2].base_stat,result.stats[3].base_stat,result.stats[4].base_stat,result.stats[5].base_stat,],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 255)',
+                    'rgba(255, 255, 255, 255)',
+                    'rgba(255, 255, 255, 255)',
+                    'rgba(255, 255, 255, 255)',
+                    'rgba(255, 255, 255, 255)',
+                    'rgba(255, 255, 255, 255)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 255, 1)',
+                    'rgba(54, 162, 255, 1)',
+                    'rgba(54, 162, 255, 1)',
+                    'rgba(54, 162, 255, 1)',
+                    'rgba(54, 162, 255, 1)',
+                    'rgba(54, 162, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        type: 'bar',
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+      });
+        }
+        });
+    }
 </script>
 </body>
 </html>
